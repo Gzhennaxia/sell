@@ -107,5 +107,33 @@ CTRL + SHIFT + U：将选中的单词转化为大写
 
 ![1533465583496](C:\Users\admin\AppData\Local\Temp\1533465583496.png)
 
+## 单位转换
+
+> [项目中使用JsonSerializer将JavaBean中Date毫秒级转秒级的简便方法](https://blog.csdn.net/weixin_38303684/article/details/78410627)
+
+![](https://i.loli.net/2018/08/07/5b68793b05e60.jpg)
+
+![](https://i.loli.net/2018/08/07/5b6879d16fade.jpg)
+
+## 不返回null值字段
+
+> [@JsonInclude 注解不返回null值字段](https://blog.csdn.net/itguangit/article/details/78701110)
+
+1. 局部配置
+
+   ![](https://i.loli.net/2018/08/07/5b6884246fac6.jpg)
+
+2. 全局配置
+
+   ![](https://i.loli.net/2018/08/07/5b68847fc089c.jpg)
+
+# Gson
+
+## TypeToken
+
+字符串--->List
+
+![](https://i.loli.net/2018/08/07/5b6870b76ba1c.jpg)
+
 
 
