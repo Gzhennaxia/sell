@@ -135,5 +135,33 @@ CTRL + SHIFT + U：将选中的单词转化为大写
 
 ![](https://i.loli.net/2018/08/07/5b6870b76ba1c.jpg)
 
+# 微信
 
+## 公众号测试号的使用
+
+### 申请测试号
+
+> [申请地址](http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login )
+
+![](https://i.loli.net/2018/08/09/5b6b194449c67.jpg)
+
+![](https://i.loli.net/2018/08/09/5b6b19995bdb5.jpg)
+
+![](https://i.loli.net/2018/08/09/5b6b1a220c0b0.jpg)
+
+![](https://i.loli.net/2018/08/09/5b6b17c7057af.jpg)
+
+![1533746077710](C:\Users\admin\AppData\Local\Temp\1533746077710.png)
+
+![](https://i.loli.net/2018/08/09/5b6b1bc3a6f92.jpg)
+
+![](https://i.loli.net/2018/08/09/5b6b1b32306d1.jpg)
+
+![](https://i.loli.net/2018/08/09/5b6b1aeb74d5a.jpg)
+
+![](https://i.loli.net/2018/08/09/5b6b1befc2944.jpg)
+
+![](https://i.loli.net/2018/08/09/5b6b1c8a524d7.jpg)
+
+![](https://i.loli.net/2018/08/09/5b6b1cbbc4458.jpg)
 
