@@ -69,6 +69,12 @@
 　　3、shutdown -h now 立刻关机(root用户使用)
 　　4、shutdown -h 10 10分钟后自动关机
 
+## copy
+
+ cp [选项] 源文件或目录 目标文件或目录 
+
+eg：`cp -r dist/* /opt/data/wwwroot/sell/`
+
 # Markdown
 
 在markdown模式下，配对的美元符号$会作为特殊的环境标志
@@ -94,6 +100,8 @@ nginx -s reload
 ## 快捷键
 
 CTRL + SHIFT + U：将选中的单词转化为大写
+
+CTRL + ALT + B：选中接口后查看接口实现类
 
 # SpringBoot
 
@@ -164,4 +172,12 @@ CTRL + SHIFT + U：将选中的单词转化为大写
 ![](https://i.loli.net/2018/08/09/5b6b1c8a524d7.jpg)
 
 ![](https://i.loli.net/2018/08/09/5b6b1cbbc4458.jpg)
+
+## 使用SDK进行微信网页授权
+
+![](https://img.mukewang.com/szimg/5b38afde0001015705000189.jpg)
+
+![](https://i.loli.net/2018/08/10/5b6c82440807b.jpg)
+
+![](https://i.loli.net/2018/08/10/5b6c852423656.jpg)
 
