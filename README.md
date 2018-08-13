@@ -143,6 +143,12 @@ CTRL + ALT + B：选中接口后查看接口实现类
 
 ![](https://i.loli.net/2018/08/07/5b6870b76ba1c.jpg)
 
+## @JsonIgnore
+
+在对象转化Json字符串时忽略某字段
+
+![](https://i.loli.net/2018/08/13/5b7071cbc6732.jpg)
+
 # 微信
 
 ## 公众号测试号的使用
