@@ -135,6 +135,20 @@ CTRL + ALT + B：选中接口后查看接口实现类
 
    ![](https://i.loli.net/2018/08/07/5b68847fc089c.jpg)
 
+# Freemarker
+
+## 小技巧
+
+将重新编译的快捷键该为 CTRL + S ，每次更改模板后保存一下，直接刷新页面即可，不用重启项目。
+
+## 【遗留问题1】
+
+完结订单的接口在成功时没有把map放入ModelAndView，为什么还是能正常显示和自动跳转呢？
+
+![](https://i.loli.net/2018/08/13/5b71936e3579a.jpg)
+
+![](https://i.loli.net/2018/08/13/5b7193ca171f0.jpg)
+
 # Gson
 
 ## TypeToken
