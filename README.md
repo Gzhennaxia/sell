@@ -101,7 +101,9 @@ nginx -s reload
 
 CTRL + SHIFT + U：将选中的单词转化为大写
 
-CTRL + ALT + B：选中接口后查看接口实现类
+CTRL + ALT + B：光标位于接口/类名（方法名）时跳转到其实现/子类（方法实现）
+
+CTRL + B：光标位于接口/类名（方法名）时跳转到其父接口/类（方法实现）
 
 # SpringBoot
 
