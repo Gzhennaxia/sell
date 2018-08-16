@@ -15,7 +15,14 @@ server:
 wechat:
   mpAppId: wxa4fb609e642696be
   mpAppSecret: 310ca42cb9f36f27a9c997b01faf6a0b
+  openAppId:
+  openAppSecret:
   mchId:
   mchKey:
   keyPath:
   notifyUrl: http://gzhennaxia.natapp1.cc/sell/pay/notify
+
+projectUrl:
+  wechatMpAuthorize: http://gzhennaxia.natapp1.cc
+  wecharOpenAuthorize: http://gzhennaxia.natapp1.cc
+  sell:
