@@ -1,3 +1,21 @@
+[TOC]
+
+# 数据库
+
+```mysql
+create table `seller_info`(
+	`seller_id` varchar(32) not null,
+	`username` varchar(32) not null,
+	`password` varchar(32) not null,
+	`openid` varchar(64) not null comment '微信openid',
+	`create_time` timestamp not null default current_timestamp comment '创建时间',
+	`update_time` timestamp not null default current_timestamp on update current_timestamp comment '更新时间',
+	primary key (`seller_id`)
+) comment '卖家信息表';
+```
+
+
+
 # Linux命令
 
 ## vim命令
@@ -206,4 +224,40 @@ CTRL + B：光标位于接口/类名（方法名）时跳转到其父接口/类�
 ![](https://i.loli.net/2018/08/10/5b6c82440807b.jpg)
 
 ![](https://i.loli.net/2018/08/10/5b6c852423656.jpg)
+
+# 分布式系统
+
+## 什么是分布式系统
+
+> 旨在支持应用程序和服务的开发,可以利用物理架构,由**多个自治的处理元素**,**不共享主内存**,但通过**网络**发送**消息**合作.   ---Leslie Lanport
+
+### 三个特点
+
+1. 多节点
+2. 消息通信
+3. 不共享内存
+
+### 三个概念
+
+1. 分布式系统(distributed system)
+2. 集群(cluster)
+3. 分布式计算(distributed computing)
+
+### 分布式系统与集群
+
+#### 区别和联系
+
+分布式: 主食厨子 + 甜点厨子
+
+集群: 主食厨子 + 主食厨子  或者   甜点厨子 +  甜点厨子
+
+# session
+
+http协议是无状态的
+
+会话可以理解为key-value
+
+## 会话实现方式
+
+从key的角度可以分为: sessionId 和 token
 

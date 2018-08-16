@@ -36,6 +36,10 @@ public class ProductCategory {
      */
     private Integer categoryType;
 
+    private Date createTime;
+
+    private Date updateTime;
+
     public ProductCategory() {
     }
 
