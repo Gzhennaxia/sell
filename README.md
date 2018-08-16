@@ -225,6 +225,12 @@ CTRL + B：光标位于接口/类名（方法名）时跳转到其父接口/类�
 
 ![](https://i.loli.net/2018/08/10/5b6c852423656.jpg)
 
+## 扫码登录
+
+> [网站应用微信登录开发指南](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN)
+
+
+
 # 分布式系统
 
 ## 什么是分布式系统
