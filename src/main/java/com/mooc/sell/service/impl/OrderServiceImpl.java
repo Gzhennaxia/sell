@@ -12,10 +12,7 @@ import com.mooc.sell.enums.ResultEnum;
 import com.mooc.sell.exception.SellException;
 import com.mooc.sell.repository.OrderDetailRepository;
 import com.mooc.sell.repository.OrderMasterRepository;
-import com.mooc.sell.service.OrderService;
-import com.mooc.sell.service.PayService;
-import com.mooc.sell.service.ProductService;
-import com.mooc.sell.service.PushMessageService;
+import com.mooc.sell.service.*;
 import com.mooc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -56,6 +53,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PushMessageService pushMessageService;
+
+    @Autowired
+    private WebSocket webSocket;
 
     @Override
     @Transactional
@@ -102,6 +102,9 @@ public class OrderServiceImpl implements OrderService {
                 .stream().map(e -> new CartDTO(e.getProductId(), e.getProductQuantity()))
                 .collect(Collectors.toList());
         productService.decreaseStock(cartDTOList);
+
+        // 发送websocket消息
+        webSocket.sendMessage(orderDTO.getOrderId());
 
         return orderDTO;
     }
