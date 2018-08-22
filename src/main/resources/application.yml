@@ -24,6 +24,8 @@ wechat:
   mchKey:
   keyPath:
   notifyUrl: http://gzhennaxia.natapp1.cc/sell/pay/notify
+  templateId:
+    orderStatus: Bjt_KBuhQmWuzuK8EJ17VftO26SNkVq3m72DbGZZdtY
 
 projectUrl:
   wechatMpAuthorize: http://gzhennaxia.natapp1.cc

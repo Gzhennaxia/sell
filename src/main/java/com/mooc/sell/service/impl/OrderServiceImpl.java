@@ -15,6 +15,7 @@ import com.mooc.sell.repository.OrderMasterRepository;
 import com.mooc.sell.service.OrderService;
 import com.mooc.sell.service.PayService;
 import com.mooc.sell.service.ProductService;
+import com.mooc.sell.service.PushMessageService;
 import com.mooc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -52,6 +53,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private PushMessageService pushMessageService;
 
     @Override
     @Transactional
@@ -182,6 +186,9 @@ public class OrderServiceImpl implements OrderService {
             log.error("【订单完结】更新失败，orderMaster = {}", orderMaster);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
+
+        // 推送微信模板消息
+        pushMessageService.orderStatus(orderDTO);
 
         return orderDTO;
     }
