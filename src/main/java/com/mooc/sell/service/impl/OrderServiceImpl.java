@@ -9,6 +9,7 @@ import com.mooc.sell.dto.OrderDTO;
 import com.mooc.sell.enums.OrderStatusEnum;
 import com.mooc.sell.enums.PayStatusEnum;
 import com.mooc.sell.enums.ResultEnum;
+import com.mooc.sell.exception.ResponseBankException;
 import com.mooc.sell.exception.SellException;
 import com.mooc.sell.repository.OrderDetailRepository;
 import com.mooc.sell.repository.OrderMasterRepository;
@@ -71,6 +72,7 @@ public class OrderServiceImpl implements OrderService {
             ProductInfo productInfo = productService.findOne(orderDetail.getProductId());
             if (productInfo == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIT);
+//                throw new ResponseBankException();
             }
 
             // 2. 计算订单总价
