@@ -467,3 +467,39 @@ public boolean lock(String key, String value) {
 
 假设发生死锁后有T1，T2两个线程同时走到“解开死锁”部分的代码，假设此时currentValue=A，两个线程的value都是B，由于redis是单线程的，同一时刻只有一个线程会执行getAndSet方法，假设T1执行了该方法，则oldValue与currentValue都是A，返回ture，当T2执行完getAndSet方法后，oldValue=B，而currentValue一直为A，故放回false。这样就保证了只有有一个线程拿到锁。
 
+## 缓存
+
+1. 启动类上加上注解`@EnableCaching`
+
+2. 接口方法上加上注解`@Cacheable`
+
+   注解@Cacheable的属性属性
+
+   1. cacheNames（可以在类上使用@CacheConfig(cacheNames = "...")来指定该类下所有@Cacheable的cacheNames）
+
+   2. key（默认为空字符串，当不填key值时key的值为）
+
+   3. condition
+
+      使用SPEL表达式，当sellerId的长度大于3时才缓存
+
+      ![](https://i.loli.net/2018/08/26/5b82b656974ee.jpg)
+
+   4. unless
+
+      使用SPEL表达式，**如果**错误码不等于0时**不**进行缓存
+
+      ```java
+      @GetMapping("/list")
+          @Cacheable(cacheNames = "product", key = "123", condition = "#sellerId.length() > 3", unless = "#result.getCode() != 0")
+          public ResultVO list(@RequestParam("sellerId")String sellerId) {
+      ```
+
+   注意：接口返回值必须可序列化
+
+    	1. 让其实现Serializable接口
+    	2. 给它一个serialVersionUID（可以使用IDEA的插件GenerateSerializationVersionUID，给这个插件设置个CTRL+SHIFT+I的快捷键）
+
+3. 再更新的接口方法上加上`@CacheEvict`注解来清除对应的缓存
+
+   注意：@CacheEvict注解中的cacheNames和key属性值要和@Cacheable的一致
