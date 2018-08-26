@@ -300,9 +300,170 @@ http协议是无状态的
 # 测压
 
 > 使用Apache ab模拟并发
+>
+> [Apache Bench安装与使用](https://www.cnblogs.com/Ryana/p/6279232.html)
+>
+> [Windows 安装启动apache时出现错误的解决方法](https://www.cnblogs.com/surge/p/5991743.html)
+>
+> [【Apache】从Apache官网下载windows版apache服务器，并用AB进行压力测试](https://blog.csdn.net/ahaaaaa/article/details/51514175)
+
+```shell
+// -n 标识总请求数，-c 标识总并发数
+ab -n 100 -c 100 http://www.baidu.com
+
+// 连续六十秒内连续发请求
+ab -t 60 -c 100 http://www.baidu.com
+```
 
 # Redis
 
 > [官网](https://redis.io/)
 >
 > [官网中文翻译版](http://www.redis.cn/)
+
+## SETNX
+
+> [SETNX](http://www.redis.cn/commands/setnx.html)
+
+将`key`设置值为`value`，如果`key`不存在，这种情况下等同[SET](http://www.redis.cn/commands/set.html)命令。 当`key`存在时，什么也不做。`SETNX`是”**SET** if **N**ot e**X**ists”的简写
+
+## GETSET
+
+> [GETSET](http://www.redis.cn/commands/getset.html)
+
+自动将key对应到value并且返回原来key对应的value。如果key存在但是对应的value不是字符串，就返回错误。
+
+## Redis分布式锁
+
+```java
+package com.mooc.sell.service;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+/**
+ * @Description：
+ * @Auther： libo
+ * @date： 2018/8/26:20:37
+ */
+@Component
+@Slf4j
+public class RedisLock {
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    /**
+     * 加锁
+     *
+     * @param key
+     * @param value 当前时间+超时时间
+     * @return
+     */
+    public boolean lock(String key, String value) {
+        // SETNX再java中对应的是setIfAbsent
+        if (redisTemplate.opsForValue().setIfAbsent(key, value)) {
+            return true;
+        }
+
+        String currentValue = redisTemplate.opsForValue().get(key);
+        // 如果锁过期
+        if (!StringUtils.isEmpty(currentValue)
+                && Long.parseLong(currentValue) < System.currentTimeMillis()) {
+            // 获取上一个锁的时间
+            String oldValue = redisTemplate.opsForValue().getAndSet(key, value);
+            if (!StringUtils.isEmpty(oldValue) && oldValue.equals(currentValue)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 解锁
+     *
+     * @param key
+     * @param value
+     */
+    public void unlock(String key, String value) {
+        try {
+            String currentValue = redisTemplate.opsForValue().get(key);
+            if (!StringUtils.isEmpty(currentValue) && currentValue.equals(value)) {
+                redisTemplate.opsForValue().getOperations().delete(key);
+            }
+        } catch (Exception e) {
+            log.error("【redis分布式锁】解锁异常，{}", e);
+        }
+    }
+}
+```
+
+### 死锁的情况
+
+当加锁的方法如下时：
+
+```java
+/**
+     * 加锁
+     *
+     * @param key
+     * @param value 当前时间+超时时间
+     * @return
+     */
+public boolean lock(String key, String value) {
+    // SETNX再java中对应的是setIfAbsent
+    if (redisTemplate.opsForValue().setIfAbsent(key, value)) {
+        return true;
+    }
+    return false;
+}
+```
+
+```java
+// 1. 加锁
+
+// 2. 正常逻辑。。。
+
+// 3. 解锁
+```
+
+当在加锁完成后，第二部分发生异常，最后未能正常解锁，此时就会造成死锁。
+
+### 死锁后保证线程安全的解开死锁
+
+```java
+/**
+     * 加锁
+     *
+     * @param key
+     * @param value 当前时间+超时时间
+     * @return
+     */
+public boolean lock(String key, String value) {
+    // SETNX再java中对应的是setIfAbsent
+    if (redisTemplate.opsForValue().setIfAbsent(key, value)) {
+        return true;
+    }
+
+    // 解开死锁
+    String currentValue = redisTemplate.opsForValue().get(key);
+    // 如果锁过期
+    if (!StringUtils.isEmpty(currentValue)
+        && Long.parseLong(currentValue) < System.currentTimeMillis()) {
+        // 获取上一个锁的时间
+        String oldValue = redisTemplate.opsForValue().getAndSet(key, value);
+        if (!StringUtils.isEmpty(oldValue) && oldValue.equals(currentValue)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+```
+
+假设发生死锁后有T1，T2两个线程同时走到“解开死锁”部分的代码，假设此时currentValue=A，两个线程的value都是B，由于redis是单线程的，同一时刻只有一个线程会执行getAndSet方法，假设T1执行了该方法，则oldValue与currentValue都是A，返回ture，当T2执行完getAndSet方法后，oldValue=B，而currentValue一直为A，故放回false。这样就保证了只有有一个线程拿到锁。
+
